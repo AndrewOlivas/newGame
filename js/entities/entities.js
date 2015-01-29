@@ -118,7 +118,7 @@ game.PlayerBaseEntity = me.Entity.extend({
 });
 
 game.EnemyBaseEntity = me.Entity.extend({
-	init : function(s, y, settings){
+	init : function(x, y, settings){
 		this._super(me.Entity,'init', [x, y, {
 			image:"tower",
 			width:100,
