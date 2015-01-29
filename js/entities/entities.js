@@ -75,7 +75,7 @@ game.PlayerEntity = me.Entity.extend({
 });
 
 game.PlayerBaseEntity = me.Entity.extend({
-	init : function(s, y, settings){
+	init : function(x, y, settings){
 		this._super(me.Entity,'init', [x, y, {
 			image:"tower",
 			width:100,
@@ -108,10 +108,10 @@ game.PlayerBaseEntity = me.Entity.extend({
 		this.body.update(delta);
 
 		this._super(me.Entity,"update",[delta]);
-		return.true;
+		return true;
 	},
 
-	onCollision: function;(){
+	onCollision: function(){
 
 	}
 
@@ -151,10 +151,10 @@ game.EnemyBaseEntity = me.Entity.extend({
 		this.body.update(delta);
 
 		this._super(me.Entity,"update",[delta]);
-		return.true;
+		return true;
 	},
 
-	onCollision: function;(){
+	onCollision: function(){
 		
 	}
 
