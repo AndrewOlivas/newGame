@@ -232,7 +232,7 @@ game.EnemyCreep = me.Entity.extend({
 
 		this.type = "EnemyCreep";
 
-		thiS.renderable.addAnimation("walk", [3, 4, 5], 80);
+		this.renderable.addAnimation("walk", [3, 4, 5], 80);
 		this.renderable.setCurrentAnimation("walk");
 	},
 
@@ -262,9 +262,9 @@ game.GameManager = Object.extend({
 	update: function(){
 		this.now = new Date().getTime();
 
-		if(Math.round(this.now/1000)&10 ===0 && (this.now - this.lastCreep >= 1000)){
+		if(Math.round(this.now/1000) % 10 ===0 && (this.now - this.lastCreep >= 1000)){
 			this.lastCreep = this.now;
-			var creepe = me.pool.pull("EnemyCreep", 1000, 0, {});
+			var creepe = me.pool.pull("EnemyCreep", 200, 0, {});
 			me.game.world.addChild(creepe, 5);
 
 		}
