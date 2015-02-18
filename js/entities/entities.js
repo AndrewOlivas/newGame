@@ -109,7 +109,6 @@ game.PlayerEntity = me.Entity.extend({
 					this.body.falling = false;
 					this.body.vel.y = -1;
 				}
-
 				else if (xdif>-35 && this.facing==="right" && (xdif<0)) {
 					this.body.vel.x = 0;
 					this.pos.x = this.pos.x -1;
@@ -251,6 +250,8 @@ game.EnemyCreep = me.Entity.extend({
 	},
 
 	update: function(delta){
+		this.now = new Date().getTime();
+
 		this.body.vel.x -= this.body.accel.x * me.timer.tick;
 
 		me.collision.check(this, true, this.collideHandler.bind(this), true);
@@ -274,7 +275,7 @@ game.EnemyCreep = me.Entity.extend({
 				this.lastHit = this.now;
 				response.b.loseHealth(1);
 			}
-		}else if{response.b.type==='PlayerEntity'}{
+		}else if(response.b.type==='PlayerEntity'){
 			var xdif = this.pos.x - response.b.pos.x;
 			this.attacking=true;
 			// this.lastAttack=this.now;
