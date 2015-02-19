@@ -130,13 +130,19 @@ game.PlayerEntity = me.Entity.extend({
 				if (xdif>0) {
 					this.pos.x = this.pos.x + 1;
 					if (this.feeling==="left") {
-						this.vel.x = 0;
+						this.body.vel.x = 0;
 					}
 				}else{
 					this.pos.x = this.pos.x - 1;
+					if (this.facing==="right") {
+						this.body.vel.x = 0;
 				}
+			}
 
-				if(this.renderable.isCurrentAnimation("attack") && this.now-this.lastHit >= 1000) {
+				if(this.renderable.isCurrentAnimation("attack") && this.now-this.lastHit >= 1000
+					&& (Math.abs(xdif) <=40) && 
+					((( xdif>0 ) && this.facing==="left") || ((xdif<0) && this.facing==="right"))
+						){
 					this.lastHit = this.now;
 					response.b.loseHealth(1);
 				}
@@ -271,6 +277,7 @@ game.EnemyCreep = me.Entity.extend({
 	},
 
 	update: function(delta){
+		console.log(this.health);
 		if (this.health <= 0) {
 			me.game.world.removeChild(this);
 		}
