@@ -15,6 +15,7 @@ game.PlayerEntity = me.Entity.extend({
 			this.type = "PlayerEntity";
 			this.health = game.data.playerHealth;
 			this.body.setVelocity(game.data.playerMoveSpeed, 20);
+
 			this.facing = "right";
 			this.now = new Date().getTime();
 			this.lastHit = this.now;
@@ -352,7 +353,7 @@ game.GameManager = Object.extend({
 
 		if (game.data.player.dead) {
 			me.game.world.removeChild(game.data.player);
-			me.state.current().resetPlayer(10, 0);
+			me.state.current().resetPlayer(0, 420);
 
 		}
 
