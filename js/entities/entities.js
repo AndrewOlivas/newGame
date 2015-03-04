@@ -12,15 +12,10 @@ game.PlayerEntity = me.Entity.extend({
 				}
 			}]);
 
-			this.type = "PlayerEntity";
-			this.health = game.data.playerHealth;
-			this.body.setVelocity(game.data.playerMoveSpeed, 20);
-
+			this.body.setVelocity(5, 20);
 			this.facing = "right";
 			this.now = new Date().getTime();
 			this.lastHit = this.now;
-			this.dead = false;
-			this.attack = game.data.playerAttack;
 			this.lastAttack = new Date().getTime();
 			// keeps track of where player going
 			me.game.viewport.follow(this.pos,me.game.viewport.AXIS.BOTH);
@@ -36,15 +31,46 @@ game.PlayerEntity = me.Entity.extend({
 		update: function(delta){
 			this.now = new Date().getTime();
 
-			if (this.health <= 0) {
-				this.dead = true;
+			this.dead = checkIfDead();
 
-				// this.body.pos.x = 10;
-				// this.body.pos.y = 0;
-				// this.body.updateBounds();
-				// this.health = game.data.playerHealth;
+			this.checkKeyPressesAndMove();
+
+			
+			
+			else if (me.input.isKeyPressed("attack")) {
+				
+				if(!this.renderable.isCurrentAnimation("attack")){
+					console.log(!this.renderable.isCurrentAnimation("attack"));
+					
+					// sets current animation to attack and once thats over goes back to idle
+					this.renderable.setCurrentAnimation("attack","idle");
+					// starts from first animation then the one you left off on
+					this.renderable.setAnimationFrame();
+				}
+			}
+			else if(this.body.vel.x !== 0 && !this.renderable.isCurrentAnimation("attack")){
+				if (!this.renderable.isCurrentAnimation("walk")) {
+					this.renderable.setCurrentAnimation("walk");
+				}
+			}else if(!this.renderable.isCurrentAnimation("attack")){
+				this.renderable.setCurrentAnimation("idle");
 			}
 
+			me.collision.check(this, true, this.collideHandler.bind(this), true);
+			this.body.update(delta);
+
+			this._super(me.Entity,"update",[delta]);
+			return true;
+
+		},
+
+		checkIfDead: function(){
+			if (this.health <= 0){
+				this.dead = true;
+			}
+		},
+
+		checkKeyPressesAndMove: function(){
 			if (me.input.isKeyPressed("right")) {
 				//sets postition of x by adding the velocity defined above
 				//setVelocity() and multiplting it by me.timer.tick
@@ -74,41 +100,7 @@ game.PlayerEntity = me.Entity.extend({
 					this.renderable.setCurrentAnimation("walk");
 				}
 			}
-			
-			else if (me.input.isKeyPressed("attack")) {
-				
-				if(!this.renderable.isCurrentAnimation("attack")){
-					console.log(!this.renderable.isCurrentAnimation("attack"));
-					
-					// sets current animation to attack and once thats over goes back to idle
-					this.renderable.setCurrentAnimation("attack","idle");
-					// starts from first animation then the one you left off on
-					this.renderable.setAnimationFrame();
-				}
-			}
-			else if(this.body.vel.x !== 0 && !this.renderable.isCurrentAnimation("attack")){
-				if (!this.renderable.isCurrentAnimation("walk")) {
-					this.renderable.setCurrentAnimation("walk");
-				}
-			}else if(!this.renderable.isCurrentAnimation("attack")){
-				this.renderable.setCurrentAnimation("idle");
-			}
-
-			
-
-
-
-			me.collision.check(this, true, this.collideHandler.bind(this), true);
-			this.body.update(delta);
-
-			this._super(me.Entity,"update",[delta]);
-			return true;
-
 		},
-
-		loseHealth: function(damage){
-			this.health = this.health - damage;
-			},
 
 		collideHandler: function(response){
 			if(response.b.type==='EnemyBaseEntity'){
@@ -121,6 +113,7 @@ game.PlayerEntity = me.Entity.extend({
 					this.body.falling = false;
 					this.body.vel.y = -1;
 				}
+
 				else if (xdif>-35 && this.facing==="right" && (xdif<0)) {
 					this.body.vel.x = 0;
 					this.pos.x = this.pos.x -1;
@@ -129,47 +122,12 @@ game.PlayerEntity = me.Entity.extend({
 					this.pos.x = this.pos.x +1;
 				}
 
-				if (this.renderable.isCurrentAnimation("attack") && this.now-this.lastHit >= game.data.playerAttackTimer) {
+				if (this.renderable.isCurrentAnimation("attack") && this.now-this.lastHit >= 600) {
+					console.log("tower Hit");
 					this.lastHit = this.now;
-					response.b.loseHealth(game.data.playerAttack);
+					response.b.loseHealth();
 				}
 
-			}else if(response.b.type==='EnemyCreep'){
-				var xdif = this.pos.x - response.b.pos.x;
-				var ydif = this.pos.y - response.b.pos.y;
-
-				if (xdif>0) {
-					// this.pos.x = this.pos.x + 1;
-					if (this.feeling==="left") {
-						this.body.vel.x = 0;
-					}
-				}else{
-					// this.pos.x = this.pos.x - 1;
-					if (this.facing==="right") {
-						this.body.vel.x = 0;
-				}
-			}
-
-				if(this.renderable.isCurrentAnimation("attack") && this.now-this.lastHit >= game.data.playerAttackTimer
-					&& (Math.abs(xdif) <=40) && 
-					((( xdif>0 ) && this.facing==="left") || ((xdif<0) && this.facing==="right"))
-						){
-					this.lastHit = this.now;
-				if (response.b.health <= this.attack) {
-					game.data.gold += 1;
-					console.log("current gold: " + game.data.gold);
-				}
-					response.b.loseHealth(game.data.playerAttack);
-
-				}
 			}
 		}
 });
-
-
-
-
-
-
-	
-
