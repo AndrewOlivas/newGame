@@ -64,13 +64,13 @@ game.PlayerEntity = me.Entity.extend({
 
 		},
 
-		checkIfDead: function(){
+	checkIfDead: function(){
 			if (this.health <= 0){
 				this.dead = true;
 			}
 		},
 
-		checkKeyPressesAndMove: function(){
+	checkKeyPressesAndMove: function(){
 			if (me.input.isKeyPressed("right")) {
 				//sets postition of x by adding the velocity defined above
 				//setVelocity() and multiplting it by me.timer.tick
@@ -102,33 +102,12 @@ game.PlayerEntity = me.Entity.extend({
 			}
 		},
 
-		collideHandler: function(response){
+	collideHandler: function(response){
 			if(response.b.type==='EnemyBaseEntity'){
 				this.collideWithEnemyBase(response);
 
-			}else if (response.b.type==='EnemyCreep') {
-				var xdif = this.pos.x - response.b.pos.x;
-				var ydif = this.pos.y - response.b.pos.y;
-
-				if (xdif>0) {
-					if (this.facing==='left') {
-						this.body.vel.x = 0;
-					}
-				}else{
-					if (this.facing==='right') {
-						this.body.vel.x = 0;
-					}
-				}
-				if (this.renderable.isCurrentAnimation("attack") && this.now-this.lastHit) {
-					&& (Math.abs(ydif) <=40) &&
-					(((xdif>0) && this.facing==='left') || ((xdif<0) && this.facing)
-						){
-						this.lastHit = this.now;
-						if (response.b.health <= game.data.playerAttack) {
-							game.data.gold += 1;
-							console.log("Current gold: " + game.data.gold);
-						}
-					}
+			}else if (response.b.type==='EnemyCreep'){
+				this.collideWithEnemyCreep(response);
 				}
 			// 	if (this.renderable.isCurrentAnimation("attack") && this.now-this.lastHit >= 600) {
 			// 		console.log("tower Hit");
@@ -137,7 +116,7 @@ game.PlayerEntity = me.Entity.extend({
 			// 	}
 			// }
 		},
-		collideWithEnemyBase:function(response){
+	collideWithEnemyBase:function(response){
 			var xdif = this.pos.x - response.b.pos.x;
 			var ydif = this.pos.y - response.b.pos.y;
 
@@ -155,5 +134,50 @@ game.PlayerEntity = me.Entity.extend({
 				this.lastHit = this.now;
 				response.b.loseHealth(game.data.playerAttack);
 			}
-	}
+	},
+
+	collideWithEnemyCreep: function(response){
+
+				var xdif = this.pos.x - response.b.pos.x;
+				var ydif = this.pos.y - response.b.pos.y;
+
+				this.stopMovement(xdif);
+
+				if(this.checkAttack(xdif, ydif,)){
+					this.hitCreep(response);
+					};
+	},
+
+	stopMovement: function(xdif){
+		if (xdif>0) {
+					if (this.facing==='left') {
+						this.body.vel.x = 0;
+					}
+				}else{
+					if (this.facing==='right') {
+						this.body.vel.x = 0;
+					}
+				}
+		},
+
+	checkAttack: function(xdif, ydif,){
+		if(this.renderable.isCurrentAnimation("attack") && this.now-this.lastHit) {
+					&& (Math.abs(ydif) <=40) &&
+					(((xdif>0) && this.facing==='left') || ((xdif<0) && this.facing)
+						){
+						this.lastHit = this.now;
+						
+						return turn;
+				}
+				return false;
+		},
+
+	hitCreep: function(response){
+			if (response.b.health <= game.data.playerAttack) {
+							game.data.gold += 1;
+							console.log("Current gold: " + game.data.gold);
+						}
+
+						response.b.loseHealth(game.data.playerAttack);
+		},
 });
