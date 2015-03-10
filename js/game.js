@@ -3,12 +3,12 @@ var game = {
 	data : {
 		// score
 		score : 0,
-		enemyBaseHealth: 1,
-		PlayerBaseHealth: 1,
-		enemyCreepHealth: 10,
+		enemyBaseHealth: 10,
+		PlayerBaseHealth: 10,
+		enemyCreepHealth: 2,
 		playerHealth: 10,
 		enemyCreepAttack: 1,
-		playerAttack: 1,
+		playerAttack: 2,
 		//orcBaseDamage: 10,
 		//orcBaseHealth: 100,
 		//orcBaseSpeed: 3,
@@ -47,7 +47,7 @@ var game = {
 
 	me.save.add({exp: 0, exp2: 0, exp3: 0, exp4: 0});
 	
-
+	me.state.SPENDEXP = 112;
 
 	me.audio.init("mp3,ogg");
 
@@ -71,6 +71,7 @@ var game = {
 
 		me.state.set(me.state.MENU, new game.TitleScreen());
 		me.state.set(me.state.PLAY, new game.PlayScreen());
+		me.state.set(me.state.SPENDEXP, new game.SpendExp());
 
 		// Starts the game up
 		me.state.change(me.state.MENU);

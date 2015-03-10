@@ -12,7 +12,7 @@ game.TitleScreen = me.ScreenObject.extend({
 			},
 
 			draw: function(renderer){
-				this.font.draw(renderer.getContext(), "READY TO PLAY ;)", this.pos.x, this.pos.y);
+				this.font.draw(renderer.getContext(), "START A NEW GAME", this.pos.x, this.pos.y);
 			},
 
 			update: function(dt){
@@ -40,7 +40,7 @@ game.TitleScreen = me.ScreenObject.extend({
 			},
 
 			draw: function(renderer){
-				this.font.draw(renderer.getContext(), "Click To Play!", this.pos.x, this.pos.y);
+				this.font.draw(renderer.getContext(), "CONTINUE", this.pos.x, this.pos.y);
 			},
 
 			update: function(dt){
@@ -54,8 +54,9 @@ game.TitleScreen = me.ScreenObject.extend({
 				game.data.exp = me.save.exp2;
 				game.data.exp1 = me.save.exp3;
 				game.data.exp1 = me.save.exp4;
+				
 				me.input.releasePointerEvent('pointerdown', this);
-				me.state.change(me.state.PLAY);
+				me.state.change(me.state.SPENDEXP);
 
 			}
 	})));
