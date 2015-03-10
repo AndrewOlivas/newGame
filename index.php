@@ -18,7 +18,7 @@
 
 		<!-- melonJS Library -->
 		<!-- build:js js/app.min.js -->
-		<script type="text/javascript" src="lib/melonJS-1.1.0.js"></script>
+		<script type="text/javascript" src="lib/melonJS-1.1.0-min.js"></script>
 
 		<!-- Plugin(s) -->
 		<script type="text/javascript" src="lib/plugins/debugPanel.js"></script>
@@ -42,16 +42,16 @@
 			window.onReady(function onReady() {
 				game.onload();
 
-				// Mobile browser hacks
+				// Mobile stuff joesph showed me, dont know if it works but its cool
 				if (me.device.isMobile && !navigator.isCocoonJS) {
-					// Prevent the webview from moving on a swipe
+					
 					window.document.addEventListener("touchmove", function (e) {
 						e.preventDefault();
 						window.scroll(0, 0);
 						return false;
 					}, false);
 
-					// Scroll away mobile GUI
+					
 					(function () {
 						window.scrollTo(0, 1);
 						me.video.onresize(null);
