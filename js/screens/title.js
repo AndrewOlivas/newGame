@@ -6,7 +6,7 @@ game.TitleScreen = me.ScreenObject.extend({
 		me.game.world.addChild(new (me.Renderable.extend({
 			init: function(){
 				this._super(me.Renderable, 'init', [270, 240, 300, 50]);
-				this.font = new me.Font("Arial", 46, "white");
+				this.font = new me.Font("Arial", 46, "gold");
 				me.input.registerPointerEvent('pointerdown', this, this.newGame.bind(this), true)
 				
 			},
@@ -36,7 +36,7 @@ game.TitleScreen = me.ScreenObject.extend({
 		me.game.world.addChild(new (me.Renderable.extend({
 			init: function(){
 				this._super(me.Renderable, 'init', [380, 340, 250, 50]);
-				this.font = new me.Font("Arial", 46, "white");
+				this.font = new me.Font("Arial", 46, "gold");
 				me.input.registerPointerEvent('pointerdown', this, this.newGame.bind(this), true)
 			},
 
