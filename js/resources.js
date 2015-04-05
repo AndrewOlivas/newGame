@@ -4,15 +4,20 @@ game.resources = [
 	 * @example
 	 * {name: "example", type:"image", src: "data/img/example.png"},
 	 */
+
 	 {name: "background-tiles", type:"image", src: "data/img/background-tiles.png"},
 	 {name: "meta-tiles", type:"image", src: "data/img/meta-tiles.png"},
 	 {name: "player", type:"image", src: "data/img/orcSpear.png"},
 	 {name: "tower", type:"image", src: "data/img/tower_round.svg.png"},
 	 {name: "creep1", type:"image", src: "data/img/brainmonster.png"},
 	 {name: "title-screen", type:"image", src: "data/img/title.png"},
-	 {name: "exp-screen", type:"image", src: "data/img/spend.png"},
+	 {name: "exp-screen", type:"image", src: "data/img/loadpic.png"},
 	 {name: "gold-screen", type:"image", src: "data/img/spend.png"},
-	 //loaded tile sets for game from image folder
+	 {name: "spear", type:"image", src: "data/img/spear.png"},
+	 {name: "gloop", type:"image", src: "data/img/gloop.png"},
+	 {name: "load-screen", type:"image", src: "data/img/loadpic.png"},
+	 {name: "new-screen", type:"image", src: "data/img/newpic.png"},
+	 {name: "pause-screen", type:"image", src: "data/img/newpic.png"},
 
 
 	/* Atlases 
@@ -25,8 +30,8 @@ game.resources = [
 	 * {name: "example01", type: "tmx", src: "data/map/example01.tmx"},
 	 * {name: "example01", type: "tmx", src: "data/map/example01.json"},
  	 */
- 	 {name: "test", type: "tmx", src: "data/map/test.tmx"},
- 	 //loaded level one named test.tmx
+ 	 
+ 	 {name: "level01", type: "tmx", src: "data/map/test.tmx"},
 
 	/* Background music. 
 	 * @example
