@@ -1,4 +1,5 @@
 
+
 var game = {
 	//where to store game info
 	data : {
