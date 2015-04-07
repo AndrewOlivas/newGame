@@ -1,6 +1,7 @@
 game.SpearThrow = me.Entity.extend({
 	init: function(x, y, settings, facing){
 		this._super(me.Entity, 'init', [x, y, {
+			// spear variables
 			image:"spear",
 			width: 48,
 			height: 48,
@@ -20,6 +21,7 @@ game.SpearThrow = me.Entity.extend({
 
 	update: function(delta){
 		if (this.facing === 'left') {
+	// sets velocity and collision of the spear
 		this.body.vel.x -= this.body.accel.x * me.timer.tick;
 	}else{
 		this.body.vel.x += this.body.accel.x * me.timer.tick;
@@ -33,7 +35,7 @@ game.SpearThrow = me.Entity.extend({
 
 		return true;
 	},
-
+	// makes spear do damage
 	collideHandler: function(response){
 		if(response.b.type==='EnemyBase' || response.b.type==='EnemyCreep'){
 		response.b.loseHealth(this.attack);

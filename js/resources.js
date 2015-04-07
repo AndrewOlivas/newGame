@@ -16,8 +16,10 @@ game.resources = [
 	 {name: "spear", type:"image", src: "data/img/spear.png"},
 	 {name: "gloop", type:"image", src: "data/img/gloop.png"},
 	 {name: "load-screen", type:"image", src: "data/img/loadpic.png"},
-	 {name: "new-screen", type:"image", src: "data/img/newpic.png"},
-	 {name: "pause-screen", type:"image", src: "data/img/newpic.png"},
+	 {name: "new-screen", type:"image", src: "data/img/pause.png"},
+	 {name: "pause-screen", type:"image", src: "data/img/pause.png"},
+	 {name: "scrolling", type:"image", src: "data/img/castle-bg.jpg"},
+
 
 
 	/* Atlases 

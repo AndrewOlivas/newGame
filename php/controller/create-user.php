@@ -1,11 +1,12 @@
 <?php
+	// require_once is like a directory to other files
 	require_once(__DIR__ . "/../model/config.php");
 
 	$username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_STRING);
 	$password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_STRING);
-	// salt is what the hackers will be after they find out they cont hack my shit
+	// saltly is what the hackers will be after they find out they cant hack my shit
 	$salt = "$5$" . "rounds=5000$" . uniqid(mt_rand(), true) . "$";
-
+	// makes the passord garbled and almost impossible to hack
 	$hashedPassword = crypt($password, $salt);
 
 	$query = $_SESSION["connection"]->query("INSERT INTO users SET "

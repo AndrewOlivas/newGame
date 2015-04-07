@@ -22,6 +22,7 @@ game.GameTimerManager = Object.extend({
 		},
 
 	creepTimerCheck: function(){
+		// function for when creeps spawn
 			if (Math.round(this.now/1000)%10 ===0 && (this.now - this.lastCreep >=1000)){
 			this.lastCreep = this.now;
 			var creepe = me.pool.pull("EnemyCreep", 1000, 0, {});
@@ -32,12 +33,14 @@ game.GameTimerManager = Object.extend({
 });
 
 game.HeroDeathManager = Object.extend({
+	// function for when your hero dies
 	init: function(x, y, settings){
 		this.alwaysUpdate = true;
 		
 	},
 
 	update: function(){
+		// win function
 		if(game.data.player.dead){
 			me.game.world.removeChild(game.data.player);
 			
@@ -97,7 +100,7 @@ game.SpendGold = Object.extend({
 
 	update: function(){
 		this.now = new Date().getTime();
-		
+		// binds buy keys and checks if you buy or not
 		if (me.input.isKeyPressed("buy") && this.now-this.lastBuy >= 1000){
 			this.lastBuy = this.now;
 			if (!this.buying) {
@@ -141,6 +144,7 @@ game.SpendGold = Object.extend({
 			},
 
 			draw: function(renderer){
+				// all skills for buytext
 				this.font.draw(renderer.getContext(), "PRESS F1-F6 TO BUY, B TO EXIT. Current Gold: " + game.data.gold, this.pos.x, this.pos.y);
 				this.font.draw(renderer.getContext(), "Skill 1: Incease Damage, Current Level: " + game.data.exp1 +, this.pos.x, this.pos.y);
 				this.font.draw(renderer.getContext(), "Skill 2: Run Faster, Current Level:", this.pos.x, this.pos.y + 80);
@@ -157,6 +161,7 @@ game.SpendGold = Object.extend({
 },
 
 	stopBuying: function(){
+		// binds and unbinds keys
 		this.buying = false;
 		me.state.resume(me.state.PLAY);
 		game.data.player.body.setVelocity(game.data.playerMoveSpeed, 20);

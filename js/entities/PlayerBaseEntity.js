@@ -1,6 +1,7 @@
 game.PlayerBaseEntity = me.Entity.extend({
 	init: function(x, y, settings){
 		this._super(me.Entity, 'init', [x, y, {
+		// tower  variables
 			image: "tower",
 			width: 100,
 			height: 100, 
@@ -10,7 +11,7 @@ game.PlayerBaseEntity = me.Entity.extend({
 				return (new me.Rect(0, 0, 100, 70)).toPolygon();
 			}
 		}]);
-
+		// all variables for tower
 		this.broken = false;
 		this.health = game.data.playerBaseHealth;
 		this.alwaysUpdate = true;
@@ -20,7 +21,7 @@ game.PlayerBaseEntity = me.Entity.extend({
 		this.renderable.addAnimation("broken", [1]);
 		this.renderable.setCurrentAnimation("idle");
 	},
-
+	// health and win functions for when its broken
 	update:function(delta){
 		if(this.health<=0){
 			this.broken = true;
@@ -31,7 +32,7 @@ game.PlayerBaseEntity = me.Entity.extend({
 		this._super(me.Entity, "update", [delta]);
 		return true;
 	},
-
+	// lose health function
 	loseHealth: function(damage){
 		this.health = this.health - damage;
 	},
