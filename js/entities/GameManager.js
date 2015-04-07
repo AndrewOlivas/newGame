@@ -15,6 +15,7 @@ game.GameTimerManager = Object.extend({
 	},
 
 	goldTimerCheck: function(){
+		// checks what time to give you gold
 			if (Math.round(this.now/1000)%20 ===0 && (this.now - this.lastCreep >=1000)){
 			game.data.gold += (game.data.exp1+1);
 			console.log("current gold: " + game.data.gold);
@@ -124,6 +125,7 @@ game.SpendGold = Object.extend({
 		game.data.buyscreen.setOpacity(0, 8);
 		me.game.world.addChild(game.data.buyscreen, 34);
 		game.data.player.body.setVelocity(0, 0);
+		// sets keys for buying
 		me.state.pause(me.input.KEY.F1, "F1",true);
 		me.state.pause(me.input.KEY.F2, "F2",true);
 		me.state.pause(me.input.KEY.F3, "F3",true);
@@ -136,6 +138,7 @@ game.SpendGold = Object.extend({
 	setBuyText: function() {
 		
 		game.data.buytext = new (me.Renderable.extend({
+			// sets fonts for the buytext and color
 			init: function(){
 				this._super(me.Renderable, 'init', [10, 10, 300, 50]);
 				this.font = new me.Font("Arial", 26, "white");

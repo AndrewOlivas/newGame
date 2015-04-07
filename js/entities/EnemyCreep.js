@@ -12,7 +12,7 @@ game.EnemyCreep = me.Entity.extend({
 				return (new me.Rect(0, 0, 32, 64)).toPolygon();
 			}
 		}]);
-
+		// shortcuts to functions
 		this.health = game.data.enemyCreepHealth;
 		this.alwaysUpdate = true;
 		this.attacking = false;
@@ -26,14 +26,16 @@ game.EnemyCreep = me.Entity.extend({
 	},
 
 	loseHealth: function(damage){
+		// function for when creep gets hit 
 		this.health = this.health - damage;
 	},
 
 	update: function(delta){
 		if(this.health <= 0){
+			// function for when creeps health reaches zero
 			me.game.world.removeChild(this);
 		}
-
+			// date time object
 		this.now = new Date().getTime();
 
 		var xdif = this.pos.x;

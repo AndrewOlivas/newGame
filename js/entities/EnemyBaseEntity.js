@@ -16,13 +16,14 @@ game.EnemyBaseEntity = me.Entity.extend({
 		this.body.onCollision = this.onCollision.bind(this);
 
 		this.type = "EnemyBaseEntity";
-
+		// animation frames
 		this.renderable.addAnimation("idle", [0]);
 		this.renderable.addAnimation("broken", [1]);
 		this.renderable.setCurrentAnimation("idle");
 	},
 
 	update:function(delta){
+		// function for when the towers health reaches zero
 		if(this.health<=0){
 			this.broken = true;
 			game.data.win = true;

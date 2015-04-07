@@ -9,7 +9,7 @@ game.PlayScreen = me.ScreenObject.extend({
 		this.resetPlayer(0, 420);
 
 		
-
+		// adds these vars so they can be pulled from other files 
 		var gameTimerManager = me.pool.pull("GameTimerManager", 0, 0, {});
 		me.game.world.addChild(gameTimerManager, 0);
 
@@ -22,7 +22,7 @@ game.PlayScreen = me.ScreenObject.extend({
 
 		var spendGold = me.pool.pull("SpendGold", 0, 0, {});
 		me.game.world.addChild(spendGold, 0);
-
+		// binds keys to game 
 		me.input.bindKey(me.input.KEY.B, "buy");
 
 		me.input.bindKey(me.input.KEY.Q, "skill1");
@@ -50,7 +50,7 @@ game.PlayScreen = me.ScreenObject.extend({
 	},
 
 	resetPlayer: function(x, y){
-		
+		// when the player dies
 		game.data.player = me.pool.pull("player", x, y, {});
 
 		me.game.world.addChild(game.data.player, 5);

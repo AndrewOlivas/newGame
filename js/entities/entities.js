@@ -12,6 +12,7 @@ game.PlayerEntity = me.Entity.extend({
 	},
 
 	setSuper: function(x, y){
+		// sets variables for player
 		this._super(me.Entity, 'init', [x, y, {
 			image: "player",
 			width: 64, 
@@ -26,6 +27,7 @@ game.PlayerEntity = me.Entity.extend({
 	},
 
 	setPlayerTimers: function(){
+		// sets time for hits and date/time Object
 		this.now = new Date().getTime();
 		this.lastHit = this.now;
 		this.lastSpear = this.now;
@@ -33,6 +35,7 @@ game.PlayerEntity = me.Entity.extend({
 	},
 
 	setAttributes: function(){
+		// sets Attributes for vel,health and this.attack
 		this.health = game.data.playerHealth;
 		this.body.setVelocity(game.data.playerMoveSpeed, 20);
 		this.attack = game.data.playerAttack;
@@ -45,6 +48,7 @@ game.PlayerEntity = me.Entity.extend({
 	},
 
 	addAnimation: function(){
+		// function for animation frames
 		this.renderable.addAnimation("idle", [78]);
 		this.renderable.addAnimation("walk", [117, 118, 119, 120, 121, 122, 123, 124, 125], 80);
 		this.renderable.addAnimation("attack", [65, 66, 67, 68, 69, 70, 71, 72], 80);
@@ -63,6 +67,7 @@ game.PlayerEntity = me.Entity.extend({
 	},
 
 	checkIfDead: function(){
+		// function to check if youre dead
 		if(this.health <=0){
 			return true;
 		}
@@ -70,7 +75,7 @@ game.PlayerEntity = me.Entity.extend({
 	},
 
 	checkKeyPressesAndMove: function(){
-
+			// checks what key is pressed and what it does
 		if(me.input.isKeyPressed("right")){
 			this.moveRight();
 		}
@@ -91,12 +96,14 @@ game.PlayerEntity = me.Entity.extend({
 	},
 
 	moveRight: function(){
+		// function for what happens when you move right
 		this.body.vel.x += this.body.accel.x * me.timer.tick;
 		this.facing = "right";
 		this.flipX(true);
 	},
 
 	moveLeft: function(){
+		// function for when you move left
 		this.body.vel.x -= this.body.accel.x * me.timer.tick;
 		this.facing = "left";
 		this.flipX(false);
@@ -108,6 +115,7 @@ game.PlayerEntity = me.Entity.extend({
 	},
 
 	checkAbilityKeys: function(){
+		// function to check key abilitys
 		if(me.input.isKeyPressed("skill1")){
 		}
 		else if(me.input.isKeyPressed("skill2")){
@@ -118,6 +126,7 @@ game.PlayerEntity = me.Entity.extend({
 	},
 
 	throwSpear: function(){
+		// function for the separ throw ability
 		if((this.now-this.lastSpear) >= game.data.spearTimer*1000 && game.data.ability3 > 0){
 		this.lastSpear = this.now;
 		var spear = me.pool.pull("spear", this.pos.x, this.pos.y, 50, 50, {}, this.facing);
@@ -126,6 +135,7 @@ game.PlayerEntity = me.Entity.extend({
 	},
 
 	setAnimation: function(){
+		// function to set animations for attack and idle
 		if(this.attacking){
 			if(!this.renderable.isCurrentAnimation("attack")){
 				this.renderable.setCurrentAnimation("attack", "idle");
@@ -146,7 +156,7 @@ game.PlayerEntity = me.Entity.extend({
 	},
 
 	loseHealth: function(damage){
-
+			// function for when you lose health
 		this.health = this.health - damage;
 	},
 
@@ -185,13 +195,14 @@ game.PlayerEntity = me.Entity.extend({
 	},
 
 	collideWithEnemyCreep: function(response){
-
+			// function for when you collide with creep
 			var xdif = this.pos.x - response.b.pos.x;
 			var ydif = this.pos.y - response.b.pos.y;
 
 			this.stopMovement(xdif);
 
 			if(this.checkAttack(xdif, ydif)){
+				// checks if creep is dead
 				this.hitCreep(response);
 			};
 
@@ -199,6 +210,7 @@ game.PlayerEntity = me.Entity.extend({
 	},
 
 	stopMovement: function(xdif){
+		// what and where to be facing when you stop moving
 			if(xdif>0){
 				if(this.facing==="left"){
 					this.body.vel.x = 0;
@@ -213,6 +225,7 @@ game.PlayerEntity = me.Entity.extend({
 	},
 
 	checkAttack: function(xdif, ydif){
+		// checks where youre facing when you attack 
 			if(this.renderable.isCurrentAnimation("attack") && this.now-this.lastHit >= game.data.playerAttackTimer
 
 			 && (Math.abs(ydif) <=40) && 
@@ -229,7 +242,7 @@ game.PlayerEntity = me.Entity.extend({
 	},
 
 	hitCreep: function(response){
-
+			// to hit creep and do damage and get that goooolllllldddd
 				if(response.b.health <= game.data.playerAttack){
 					game.data.gold += 1;
 					console.log("Current gold: " + game.data.gold);
@@ -239,7 +252,7 @@ game.PlayerEntity = me.Entity.extend({
 	}
 });
 
-
+// THIS DOSENT WORK RIGHT!!!!!!!!!!!!!!!!!!
 game.Gloop = me.Entity.extend({
 
 	init: function(x, y, settings){
@@ -337,7 +350,7 @@ game.GameTimeManager = Object.extend({
 	},
 
 	update: function(){
-
+			// what happens when the player dies and what/where he resets
 		this.now = new Date().getTime();
 		if(game.data.player.dead){
 			me.game.world.removeChild(game.data.player);
@@ -357,8 +370,4 @@ game.GameTimeManager = Object.extend({
 
 		return true;
 	}
-});
-
-
-
-	
+});	
